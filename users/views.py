@@ -14,8 +14,7 @@ class PostView(View):
         return JsonResponse({'city': 'beijing', 'subject': 'python'})
 
     def post(self, request):
-        """post请求： 执行发帖操作"""
-        # 代码简略
+    
 
         values = request.META
         return redirect('https://blog.csdn.net/qw943571775/article/details/81232145')
