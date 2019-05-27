@@ -17,7 +17,7 @@ class PostView(View):
     
 
         values = request.META
-        return JsonResponse({'city': 'beijing', 'subject': 'python'})
+        # return JsonResponse({'city': 'beijing', 'subject': 'python'})
         return redirect('https://blog.csdn.net/qw943571775/article/details/81232145')
 
 
