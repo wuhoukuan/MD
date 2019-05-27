@@ -10,7 +10,7 @@ class PostView(View):
     def get(self, request):
 
 
-        pass
+        value = request.GET
         return JsonResponse({'city': 'beijing', 'subject': 'python'})
 
     def post(self, request):
@@ -21,8 +21,4 @@ class PostView(View):
         return redirect('https://blog.csdn.net/qw943571775/article/details/81232145')
 
 
-
-
-
-        pass
 
