@@ -12,6 +12,7 @@ from django.template import loader
 
 class PostView(View):
 
+    # 保存数据
     def post(self, request):
         # print(request.GET)
         # age = request.GET.get("age")
@@ -20,7 +21,6 @@ class PostView(View):
         # name_objs  =  Employee.objects.filter(age__gte = age).values("age","name","gender")
 
         age = request.POST
-
         name =age["name"]
         ages =age["age"]
         gender = age["gender"]
@@ -36,6 +36,7 @@ class PostView(View):
 
         return HttpResponse("{}数据保存成功".format(name))
 
+    # 获取数据
     def get(self, request):
 
         age  = request.GET.get("name")
@@ -52,6 +53,7 @@ class PostView(View):
         # 响应请求
         return HttpResponse(html_str)
 
+# 修改数据
     def patch(self,request):
 
 
