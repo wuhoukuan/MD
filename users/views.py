@@ -1,24 +1,67 @@
+import json
+
 from django.shortcuts import render, redirect
 from  django.http     import   HttpResponse
 from  django.http     import   JsonResponse
 # Create your views here.
 from django.views.generic.base import View
 
+from users.models import Employee
+from django.shortcuts import   render
+from django.template import loader
 
 class PostView(View):
 
+    def post(self, request):
+        # print(request.GET)
+        # age = request.GET.get("age")
+        # print(age)
+        # # name_obj  =  Employee.objects.filter(name__contains = name)
+        # name_objs  =  Employee.objects.filter(age__gte = age).values("age","name","gender")
+
+        age = request.POST
+
+        name =age["name"]
+        ages =age["age"]
+        gender = age["gender"]
+
+        obj = Employee()
+        obj.name =name
+        obj.age = ages
+        obj.gender =gender
+        obj.save()
+
+
+
+
+        return HttpResponse("{}数据保存成功".format(name))
+
     def get(self, request):
 
+        age  = request.GET.get("name")
+        name  = Employee.objects.filter(name =age).values("name","age","gender")
 
-        value = request.GET
-        return JsonResponse({'city': 'beijing', 'subject': 'python'})
+        if len(name) == 0:
+            html_str = 'error.html'
+            template = loader.get_template(html_str)
+            return HttpResponse(template.render())
 
-    def post(self, request):
-    
+        template = loader.get_template('index.html')  # type: Template
+        # 渲染得到字符串
+        html_str = template.render(name[0])
+        # 响应请求
+        return HttpResponse(html_str)
 
-        values = request.META
-        # return JsonResponse({'city': 'beijing', 'subject': 'python'})
-        return redirect('https://blog.csdn.net/qw943571775/article/details/81232145')
+    def patch(self,request):
 
 
+        gender = request.GET.get("gender")
+        name = request.GET.get("name")
+        try:
+            d  =  Employee.objects.get(name = name )
+        except Exception:
+            return  HttpResponse("数据查询失败")
+        d.gender = gender
+        d.save()
+        return HttpResponse("{}的收入成功更改为{}".format(name,gender))
 
