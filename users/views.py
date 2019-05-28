@@ -31,9 +31,6 @@ class PostView(View):
         obj.gender =gender
         obj.save()
 
-
-
-
         return HttpResponse("{}数据保存成功".format(name))
 
     # 获取数据
@@ -55,8 +52,7 @@ class PostView(View):
 
 # 修改数据
     def patch(self,request):
-
-
+        
         gender = request.GET.get("gender")
         name = request.GET.get("name")
         try:
