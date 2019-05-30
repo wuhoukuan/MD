@@ -5,12 +5,18 @@ from  django.http     import   HttpResponse
 from  django.http     import   JsonResponse
 # Create your views here.
 from django.views.generic.base import View
+from rest_framework.mixins import ListModelMixin
 
 from users.models import Employee
 from django.shortcuts import   render
 from django.template import loader
+from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
 
-class PostView(View):
+
+
+
+class PostView(APIView):
 
     # 保存数据
     def post(self, request):
@@ -19,8 +25,9 @@ class PostView(View):
         # print(age)
         # # name_obj  =  Employee.objects.filter(name__contains = name)
         # name_objs  =  Employee.objects.filter(age__gte = age).values("age","name","gender")
-
-        age = request.POST
+        age = request.data
+        print(age)
+        # age = request.POST
         name =age["name"]
         ages =age["age"]
         gender = age["gender"]
@@ -44,7 +51,7 @@ class PostView(View):
             template = loader.get_template(html_str)
             return HttpResponse(template.render())
 
-        template = loader.get_template('index.html')  # type: Template
+        template = loader.get_template('index.html')      # type: Template
         # 渲染得到字符串
         html_str = template.render(name[0])
         # 响应请求
@@ -61,5 +68,10 @@ class PostView(View):
             return  HttpResponse("数据查询失败")
         d.gender = gender
         d.save()
+
         return HttpResponse("{}的收入成功更改为{}".format(name,gender))
+
+
+
+
 

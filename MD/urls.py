@@ -18,6 +18,11 @@ from django.contrib import admin
 from django.views.generic import View
 from  users  import  views
 
+
+
+from rest_framework.routers import DefaultRouter
+
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^users/index$', views.PostView.as_view()),
